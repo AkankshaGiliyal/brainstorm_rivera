@@ -2,7 +2,7 @@ const express = require('express'); // module for framework for nodejs
 const { ethers } = require('ethers');// ethereum library for interacting with smart contracts
 const MongoClient = require('mongodb').MongoClient; //mongodb driver for nodejs
 
-// create an Express application
+// create an express application
 const app = express();
 const port = 3000;
 
@@ -10,7 +10,7 @@ const port = 3000;
 const mntAddress = "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000";// ethereum address for the smart contract
 const mntABI = require('./mnt.json'); //address for the ABI
 
-// initialize Ethereum provider and contract instances
+// initialize E\thereum provider and contract instances
 const provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/mantle_testnet");//connects to ethereum node in mantle testnet
 const contract = new ethers.Contract(mntAddress, mntABI, provider);// smart contract instance
 
