@@ -67,10 +67,10 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true 
   // API to fetch function data
   app.get('/getFunctionData', async (req, res) => {
     try {
-      // Example: Call a function on the smart contract
+     
       const decimal = await contract.decimals();
 
-      // Store the result in MongoDB or send it as a response
+      
       res.json({ decimal });
     } catch (error) {
       console.error(error);
@@ -78,7 +78,7 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true 
     }
   });
 
-  // start the Express server
+  // start the express server
   app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
   });
