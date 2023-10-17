@@ -1,22 +1,22 @@
-const express = require('express');
-const { ethers } = require('ethers');
-const MongoClient = require('mongodb').MongoClient;
+const express = require('express'); // module for framework for nodejs
+const { ethers } = require('ethers');// ethereum library for interacting with smart contracts
+const MongoClient = require('mongodb').MongoClient; //mongodb driver for nodejs
 
 // create an Express application
 const app = express();
 const port = 3000;
 
 // define the address and ABI of the smart contract
-const mntAddress = "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000";
-const mntABI = require('./mnt.json'); // find the actual ABI file
+const mntAddress = "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000";// ethereum address for the smart contract
+const mntABI = require('./mnt.json'); //address for the ABI
 
 // initialize Ethereum provider and contract instances
-const provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/mantle_testnet");
-const contract = new ethers.Contract(mntAddress, mntABI, provider);
+const provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/mantle_testnet");//connects to ethereum node in mantle testnet
+const contract = new ethers.Contract(mntAddress, mntABI, provider);// smart contract instance
 
 // mongoDB connection details
-const mongoUrl = 'mongodb://localhost:27017';
-const dbName = 'defiData';
+const mongoUrl = 'mongodb://localhost:27017'; //mongoDB connection URL
+const dbName = 'databaseNameExample';// mongoDB database name
 
 // connect to MongoDB
 MongoClient.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
