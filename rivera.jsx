@@ -8,8 +8,8 @@ const port = 3000;
 const path = require('path');
 
 // define the address and ABI of the smart contract
-const mntAddress = "0xfa944c1996efBF9FbFF1a378903F4AD82C172D72";
-const mntABI =require('./ABI.jsx'); // find the actual ABI file
+const mntAddress = "0x2F9e0D413125275C4Ad785222c70D80901B21fB9";
+const mntABI =require('./abisample.json'); // find the actual ABI file
 
 // initialize Ethereum provider and contract instances
 const provider = new ethers.providers.JsonRpcProvider("https://rpc.mantle.xyz/");
@@ -32,17 +32,18 @@ const contract = new ethers.Contract(mntAddress, mntABI, provider);
   //const db = client.db(dbName);
 
   // function to convert event data to a format suitable for MongoDB
-  function formatEventData(from, to, value) {
+  function formatEventData(tickLower, tickUpper) {
     return {
-      from,
-      to,
-      value: ethers.utils.formatUnits(value, 18),
+      tickLower,
+      tickUpper,
     };
   }
+  const eventDataarray=[];
 
   // event listener for "Transfer" event
-  contract.on("Transfer", async (from, to, value) => {
-    const eventData = formatEventData(from, to, value);
+  contract.on("RangeChange", async (tickLower, tickUpper) => {
+    const eventData = formatEventData(tickLower, tickUpper);
+    eventDataarray.push(eventData);
 
     // insert the event data into MongoDB
     //const eventsCollection = db.collection('events');
@@ -51,6 +52,14 @@ const contract = new ethers.Contract(mntAddress, mntABI, provider);
     // print the event data to the console
     console.log(JSON.stringify(eventData, null, 4));
   });
+
+  app.get('/getEventsData', (req, res) => {
+    
+    res.json({ events: eventDataarray });
+  
+    
+  });
+  
 
   // API to fetch events data
   //app.get('/getEventsData', async (req, res) => {
